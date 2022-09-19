@@ -10,6 +10,12 @@
 
 export default {
   async fetch(request: Request): Promise<Response> {
+    console.log('request', request);
     return new Response("Hello World!");
+  },
+
+  async scheduled(request: Request): Promise<Response> {
+    console.log('request', request);
+    return new Response("Running scheduled!");
   },
 };
