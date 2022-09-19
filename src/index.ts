@@ -1,21 +1,13 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `wrangler dev src/index.ts` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `wrangler publish src/index.ts --name my-worker` to publish your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
+import { Env } from './types';
+import { updateConditions } from './updateConditions';
 
 export default {
   async fetch(request: Request): Promise<Response> {
     console.log('request', request);
-    return new Response("Hello World!");
+    return new Response('Hello World!');
   },
 
-  async scheduled(request: Request): Promise<Response> {
-    console.log('request', request);
-    return new Response("Running scheduled!");
+  async scheduled(event: ScheduledEvent, env: Env, ctx: ExtendableEvent) {
+    ctx.waitUntil(updateConditions());
   },
 };
