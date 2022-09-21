@@ -1,0 +1,17 @@
+[
+  {
+    "path": ["sunsetCliffs", "surfHeight"],
+    "range": [0, 10],
+    "pin": 21
+  },
+  {
+    "path": ["sunsetCliffs", "waterTemp"],
+    "range": [55, 80],
+    "pin": 20
+  },
+  {
+    "path": ["sunsetCliffs", "windSpeed"],
+    "range": [0, 20],
+    "pin": 16
+  }
+]

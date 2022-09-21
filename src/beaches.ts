@@ -11,7 +11,7 @@ export const beaches = {
     surflineId: '5842041f4e65fad6a77089c1',
     noaaId: '9414290',
   },
-  sunset_cliffs: {
+  sunsetCliffs: {
     surflineId: '5842041f4e65fad6a7708840',
     noaaId: '9410170',
   },
