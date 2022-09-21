@@ -5,7 +5,7 @@ from read_config import read_config, read_path
 
 config = read_config()
 
-conditions = json.loads(requests.get(config['source']))
+conditions = json.loads(requests.get(config['source']).text)
 
 GPIO.setmode(GPIO.BCM)
 
