@@ -1,4 +1,4 @@
-# imports
+import RPi.GPIO as GPIO
 from read_config import read_config, read_path
 
 conditions = json.loads(requests.get(config['source']))
