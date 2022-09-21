@@ -1,3 +1,4 @@
+import sys
 from read_config import read_config
 from actuate import move_dial
 
