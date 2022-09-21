@@ -17,11 +17,7 @@ export default {
     });
   },
 
-  async scheduled(
-    controller: ScheduledController,
-    env: Env,
-    ctx: ExtendableEvent
-  ) {
+  async scheduled(_: ScheduledController, env: Env, ctx: ExtendableEvent) {
     ctx.waitUntil(updateConditions(env.LIVING_POSTER));
   },
 };
