@@ -1,17 +1,24 @@
-[
-  {
-    "path": ["sunsetCliffs", "surfHeight"],
-    "range": [0, 10],
-    "pin": 21
+{
+  "source": "https://living-poster.elliotaplant9602.workers.dev/",
+  "servo": {
+    "pwmFrequencyHz": 50,
+    "dutyCycleRange": [2.5, 12.5]
   },
-  {
-    "path": ["sunsetCliffs", "waterTemp"],
-    "range": [55, 80],
-    "pin": 20
-  },
-  {
-    "path": ["sunsetCliffs", "windSpeed"],
-    "range": [0, 20],
-    "pin": 16
-  }
-]
+  "dials": [
+    {
+      "path": ["sunsetCliffs", "surfHeight"],
+      "range": [0, 10],
+      "pin": 21
+    },
+    {
+      "path": ["sunsetCliffs", "waterTemp"],
+      "range": [55, 80],
+      "pin": 20
+    },
+    {
+      "path": ["sunsetCliffs", "windSpeed"],
+      "range": [0, 20],
+      "pin": 16
+    }
+  ]
+}

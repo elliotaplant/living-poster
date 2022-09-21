@@ -1,8 +1,9 @@
-# imports
-
 from read_config import read_config
+from actuate import move_dial
 
 config = read_config()
 
-for dial in config:
-  print(dial)
+values = dict(enumerate([float(arg) for arg in sys.argv[2:]]))
+
+for [index, dial] in enumerate(config['dials']):
+    move_dial(values.get(index, 0), dial, config['servo'])
