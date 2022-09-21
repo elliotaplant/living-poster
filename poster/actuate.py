@@ -2,7 +2,6 @@ import RPi.GPIO as GPIO
 import logging
 import time
 
-GPIO.setmode(GPIO.BCM)
 
 def move_dial(value, dial_config, servo_config):
     print('moving pin', dial_config['pin'], 'to value', value)
@@ -12,7 +11,6 @@ def move_dial(value, dial_config, servo_config):
     duty_cycle = convert_to_duty_cycle(value, dial_config['range'], servo_config['dutyCycleRange'])
     pin.ChangeDutyCycle(duty_cycle)
     pin.stop()
-    GPIO.cleanup()
 
 def convert_to_duty_cycle(value, metric_range, servo_range):
     metric_ratio = float(value - metric_range[0]) / float(metric_range[1] - metric_range[0])
