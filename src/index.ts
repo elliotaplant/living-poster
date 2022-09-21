@@ -1,17 +1,20 @@
 import { Env } from './types';
-import { updateConditions } from './updateConditions';
+import { SURF_CONDITIONS_KV_KEY, updateConditions } from './updateConditions';
 
 export default {
-  async fetch(
-    request: Request,
-    env: ExtendableEvent,
-    ctx: ExecutionContext
-  ): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     if (request.url.includes('favicon')) {
-      return new Response('hey');
+      return new Response('Why are you looking for a favicon?');
+    } else if (request.url.includes('update')) {
+      await updateConditions(env.LIVING_POSTER);
+      return new Response('Conditions updated');
     }
-    await updateConditions();
-    return new Response('Hello World!');
+
+    const surfConditions = await env.LIVING_POSTER.get(SURF_CONDITIONS_KV_KEY);
+
+    return new Response(surfConditions, {
+      headers: { 'content-type': 'application/json' },
+    });
   },
 
   async scheduled(
@@ -19,6 +22,6 @@ export default {
     env: Env,
     ctx: ExtendableEvent
   ) {
-    ctx.waitUntil(updateConditions());
+    ctx.waitUntil(updateConditions(env.LIVING_POSTER));
   },
 };

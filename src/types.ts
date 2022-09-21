@@ -1,3 +1,3 @@
 export interface Env {
-    DO_REQUEST: DurableObjectNamespace
+  LIVING_POSTER: KVNamespace;
 }

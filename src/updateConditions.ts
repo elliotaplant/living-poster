@@ -4,6 +4,7 @@ const SURFLINE_BASE_URL = 'https://services.surfline.com/kbyg/spots/forecasts';
 const WATER_TMP =
   'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?date=latest&product=water_temperature&' +
   'datum=STND&time_zone=lst&units=english&application=surf_poster&format=json&station=';
+export const SURF_CONDITIONS_KV_KEY = 'SURF_CONDITIONS';
 
 export interface BeachConditions {
   surfHeight: number;
@@ -73,8 +74,7 @@ async function getSurfConditions() {
   return beachConditions;
 }
 
-export async function updateConditions() {
-  console.log('Updating conditions');
+export async function updateConditions(kv: KVNamespace) {
   const surfConditions = await getSurfConditions();
-  console.log('surfConditions', JSON.stringify(surfConditions, null, 2));
+  await kv.put(SURF_CONDITIONS_KV_KEY, JSON.stringify(surfConditions, null, 2));
 }

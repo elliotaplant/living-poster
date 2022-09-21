@@ -4,3 +4,7 @@ compatibility_date = "2022-09-19"
 
 [triggers]
 crons = ["55 * * * *"]
+
+[[kv_namespaces]]
+binding = "LIVING_POSTER"
+id = "67f8656ce21147b292f046e373caffc4"
