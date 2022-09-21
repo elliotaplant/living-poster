@@ -2,6 +2,7 @@ import json
 import requests
 import RPi.GPIO as GPIO
 from read_config import read_config, read_path
+from actuate import move_dial
 
 config = read_config()
 
