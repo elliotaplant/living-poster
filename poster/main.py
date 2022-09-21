@@ -3,6 +3,8 @@ import requests
 import RPi.GPIO as GPIO
 from read_config import read_config, read_path
 
+config = read_config()
+
 conditions = json.loads(requests.get(config['source']))
 
 GPIO.setmode(GPIO.BCM)

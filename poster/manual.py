@@ -5,7 +5,7 @@ from actuate import move_dial
 
 config = read_config()
 
-values = dict(enumerate([float(arg) for arg in sys.argv[2:]]))
+values = dict(enumerate([float(arg) for arg in sys.argv[1:]]))
 
 GPIO.setmode(GPIO.BCM)
 
