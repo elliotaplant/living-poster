@@ -6,8 +6,8 @@ GPIO.setmode(GPIO.BCM)
 
 def move_dial(value, dial_config, servo_config):
     print('moving pin', dial_config['pin'], 'to value', value)
-    GPIO.setup(dial['pin'], GPIO.OUT)
-    pin = GPIO.PWM(dial['pin'], servo_config['pwmFrequencyHz'])
+    GPIO.setup(dial_config['pin'], GPIO.OUT)
+    pin = GPIO.PWM(dial_config['pin'], servo_config['pwmFrequencyHz'])
     pin.start(0) # Why 0?
     duty_cycle = convert_to_duty_cycle(value, dial_config['range'], servo_config['dutyCycleRange'])
     pin.ChangeDutyCycle(duty_cycle)
