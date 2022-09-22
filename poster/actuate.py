@@ -23,9 +23,9 @@ class Actuator:
         GPIO.cleanup()
 
 
-    def move_dial(value, dial_config, servo_config):
+    def move_dial(self, value, dial_config, servo_config):
         duty_cycle = lerp(value, dial_config['range'], servo_config['dutyCycleRange'])
-        pin.ChangeDutyCycle(duty_cycle)
+        self.pins[dial_config['pin']].ChangeDutyCycle(duty_cycle)
 
 def lerp(value, metric_range, servo_range):
     metric_ratio = float(value - metric_range[0]) / float(metric_range[1] - metric_range[0])
