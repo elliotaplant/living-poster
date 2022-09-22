@@ -7,9 +7,11 @@ config = read_config()
 
 values = dict(enumerate([float(arg) for arg in sys.argv[1:]]))
 
-GPIO.setmode(GPIO.BCM)
+actuator = Actuator()
+
+actuator.setup(config)
 
 for [index, dial] in enumerate(config['dials']):
-    move_dial(values.get(index, 0), dial, config['servo'])
+    actuator.move_dial(values.get(index, 0), dial, config['servo'])
 
-GPIO.cleanup()
+actuator.cleanup()

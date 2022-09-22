@@ -8,9 +8,11 @@ config = read_config()
 
 conditions = json.loads(requests.get(config['source']).text)
 
-GPIO.setmode(GPIO.BCM)
+actuator = Actuator()
+
+actuator.setup(config)
 
 for dial in config['dials']:
-    move_dial(read_path(conditions, dial['path']), dial, config['servo'])
+    actuator.move_dial(read_path(conditions, dial['path']), dial, config['servo'])
 
-GPIO.cleanup()
+actuator.cleanup()
