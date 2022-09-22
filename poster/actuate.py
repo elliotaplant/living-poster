@@ -6,12 +6,9 @@ import time
 def move_dial(value, dial_config, servo_config):
     GPIO.setup(dial_config['pin'], GPIO.OUT)
     pin = GPIO.PWM(dial_config['pin'], servo_config['pwmFrequencyHz'])
-    pin.start(3) # Why 3?
     duty_cycle = convert_to_duty_cycle(value, dial_config['range'], servo_config['dutyCycleRange'])
-    pin.ChangeDutyCycle(duty_cycle)
-    time.sleep(1)
-    pin.ChangeDutyCycle(0)
-    time.sleep(1)
+    pin.start(duty_cycle)
+    time.sleep(0.5)
     pin.stop()
 
 def convert_to_duty_cycle(value, metric_range, servo_range):
