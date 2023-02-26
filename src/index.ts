@@ -12,6 +12,20 @@ export default {
       return new Response('Conditions updated');
     }
 
+    // Write telemetry data
+    const posterId = url.searchParams.get('poster_id');
+    const battery = url.searchParams.get('battery');
+    try {
+      await env.DB.prepare(
+        'INSERT INTO telemetry (poster_id, uri, battery) VALUES (?, ?, ?)'
+      )
+        .bind(posterId, request.url, Number(battery))
+        .all();
+    } catch (e: any) {
+      console.error(e);
+      console.error(`Failed to write telemetry data: ${e?.message}`);
+    }
+
     const conditionsJson = await env.LIVING_POSTER.get(SURF_CONDITIONS_KV_KEY);
     const beach = url.searchParams.get('beach');
     if (beach && conditionsJson) {

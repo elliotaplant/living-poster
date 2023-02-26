@@ -9,3 +9,9 @@ crons = ["55 * * * *"]
 binding = "LIVING_POSTER"
 id = "67f8656ce21147b292f046e373caffc4"
 preview_id = "49a0e7f7324c4760a6cdb401f9d63e77"
+
+[[ d1_databases ]]
+binding = "DB"
+database_name = "living_poster"
+database_id = "10a45601-cc6c-4628-a065-eb99037a7870"
+
