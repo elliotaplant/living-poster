@@ -1,5 +1,6 @@
 import { Env } from './types';
 import { SURF_CONDITIONS_KV_KEY, updateConditions } from './updateConditions';
+import { parseAsNum } from './utils';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -15,11 +16,12 @@ export default {
     // Write telemetry data
     const posterId = url.searchParams.get('poster_id');
     const battery = url.searchParams.get('battery');
+
     try {
       await env.DB.prepare(
         'INSERT INTO telemetry (poster_id, uri, battery) VALUES (?, ?, ?)'
       )
-        .bind(posterId, request.url, Number(battery))
+        .bind(posterId, request.url, parseAsNum(battery))
         .all();
     } catch (e: any) {
       console.error(e);
