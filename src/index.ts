@@ -1,3 +1,4 @@
+import { JsonResponse } from './JsonResponse';
 import { Env } from './types';
 import { SURF_CONDITIONS_KV_KEY, updateConditions } from './updateConditions';
 import { parseAsNum } from './utils';
@@ -11,6 +12,17 @@ export default {
     } else if (url.pathname.includes('update')) {
       await updateConditions(env.LIVING_POSTER);
       return new Response('Conditions updated');
+    } else if (url.pathname.includes('heartbeats')) {
+      const posterId = url.searchParams.get('poster_id');
+      const { results } = await env.DB.prepare(
+        'SELECT * FROM telemetry WHERE poster_id = ?'
+      )
+        .bind(posterId)
+        .all();
+
+      return new JsonResponse(results, {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      });
     }
 
     // Write telemetry data
@@ -37,9 +49,7 @@ export default {
           time: Date.now(),
           conditions: conditions[beach],
         };
-        return new Response(JSON.stringify(subConditions), {
-          headers: { 'content-type': 'application/json' },
-        });
+        return new JsonResponse(subConditions);
       }
     }
 
