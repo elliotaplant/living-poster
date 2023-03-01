@@ -12,10 +12,10 @@ export default {
     } else if (url.pathname.includes('update')) {
       await updateConditions(env.LIVING_POSTER);
       return new Response('Conditions updated');
-    } else if (url.pathname.includes('heartbeats')) {
+    } else if (url.pathname.includes('telemetry')) {
       const posterId = url.searchParams.get('poster_id');
       const { results } = await env.DB.prepare(
-        'SELECT * FROM telemetry WHERE poster_id = ?'
+        'SELECT * FROM telemetry WHERE poster_id = ? ORDER BY created_at DESC'
       )
         .bind(posterId)
         .all();
@@ -28,12 +28,13 @@ export default {
     // Write telemetry data
     const posterId = url.searchParams.get('poster_id');
     const battery = url.searchParams.get('battery');
+    const millis = url.searchParams.get('millis');
 
     try {
       await env.DB.prepare(
-        'INSERT INTO telemetry (poster_id, uri, battery) VALUES (?, ?, ?)'
+        'INSERT INTO telemetry (poster_id, uri, battery, millis) VALUES (?, ?, ?, ?)'
       )
-        .bind(posterId, request.url, parseAsNum(battery))
+        .bind(posterId, request.url, parseAsNum(battery), parseAsNum(millis))
         .all();
     } catch (e: any) {
       console.error(e);

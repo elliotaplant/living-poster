@@ -1,9 +1,10 @@
-DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS telemetry;
 
 CREATE TABLE
   telemetry (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     poster_id TEXT,
     uri TEXT,
-    battery NUMBER
+    battery NUMBER,
+    millis NUMBER,
   );
