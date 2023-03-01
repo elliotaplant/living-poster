@@ -15,7 +15,24 @@ export default {
     } else if (url.pathname.includes('telemetry')) {
       const posterId = url.searchParams.get('poster_id');
       const { results } = await env.DB.prepare(
-        'SELECT * FROM telemetry WHERE poster_id = ? ORDER BY created_at DESC'
+        `SELECT 
+          strftime('%Y-%m-%dT%H', created_at) as hour, 
+          count(*) as count
+        FROM telemetry 
+        WHERE poster_id = ? 
+        GROUP BY hour 
+        ORDER BY hour DESC`
+      )
+        .bind(posterId)
+        .all();
+
+      return new JsonResponse(results, {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      });
+    } else if (url.pathname.includes('battery')) {
+      const posterId = url.searchParams.get('poster_id');
+      const { results } = await env.DB.prepare(
+        'SELECT created_at, battery, millis FROM telemetry WHERE poster_id = ?'
       )
         .bind(posterId)
         .all();

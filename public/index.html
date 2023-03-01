@@ -8,48 +8,50 @@
     <div>
       <canvas id="myChart"></canvas>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.2.1/luxon.min.js"
       integrity="sha512-pyR2hpC7bLig9Ub4eUIOC/BAO4anpdt7jhpF4dfrPv+qIg+KWztdVjFPCRCsRaWVfUylUCvrrxqMFNrJBdQIjQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      module="true"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
+
     <script>
-      console.log('a');
       const { DateTime, Interval } = luxon;
       async function onload() {
-        console.log('b');
-        const resp = await fetch(
-          'https://living-poster.elliotaplant9602.workers.dev/heartbeats?poster_id=1'
-        );
-        console.log('c');
-        const heartbeats = await resp.json();
+        const heartbeats = await (
+          await fetch(
+            'https://living-poster.elliotaplant9602.workers.dev/telemetry?poster_id=1'
+          )
+        ).json();
 
-        const now = DateTime.now();
-        const start = now.minus({ day: 3 });
-        const i = Interval.fromDateTimes(start, now)
-          .splitBy({ hours: 1 })
-          .map((subInterval) => subInterval.start.toSQLDate());
-        console.log('i', i);
-
-        // iterate over range of heartbeat dates? Or just iterate over last 10 days
-        const days = heartbeats[0];
-
-        const labels = new Set(heartbeats.map((hb) => new Date(hb.created_at)));
         const ctx = document.getElementById('myChart');
 
         new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [
               {
                 label: '# of Heartbeats',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1,
+                data: heartbeats.map((hb) => ({
+                  y: hb.count,
+                  x: DateTime.fromISO(hb.hour, { zone: 'utc' }),
+                })),
               },
             ],
+          },
+          options: {
+            scales: {
+              x: {
+                type: 'time',
+                title: {
+                  display: true,
+                  text: 'Hour',
+                },
+              },
+            },
           },
         });
       }
