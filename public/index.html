@@ -5,8 +5,18 @@
     <title>Surf Poster Telemetry</title>
   </head>
   <body>
-    <div>
-      <canvas id="myChart"></canvas>
+    <div
+      style="
+        margin: 0 auto;
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      "
+    >
+      <canvas id="heartbeatsChart"></canvas>
+      <canvas id="batteriesChart"></canvas>
+      <canvas id="millisChart"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script
@@ -19,6 +29,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
 
     <script>
+      const createdAtFormat = 'yyyy-MM-dd hh:mm:ss';
       const { DateTime, Interval } = luxon;
       async function onload() {
         const heartbeats = await (
@@ -26,10 +37,17 @@
             'https://living-poster.elliotaplant9602.workers.dev/telemetry?poster_id=1'
           )
         ).json();
+        const batteries = await (
+          await fetch(
+            'https://living-poster.elliotaplant9602.workers.dev/battery?poster_id=1'
+          )
+        ).json();
 
-        const ctx = document.getElementById('myChart');
+        const heartbeatsChartCtx = document.getElementById('heartbeatsChart');
+        const batteriesChartCtx = document.getElementById('batteriesChart');
+        const millisChartCtx = document.getElementById('millisChart');
 
-        new Chart(ctx, {
+        new Chart(heartbeatsChartCtx, {
           type: 'bar',
           data: {
             datasets: [
@@ -54,7 +72,44 @@
             },
           },
         });
+
+        new Chart(batteriesChartCtx, {
+          type: 'line',
+          data: {
+            datasets: [
+              {
+                label: 'Battery',
+                data: batteries.map((b) => ({
+                  y: b.battery,
+                  x: DateTime.fromFormat(b.created_at, createdAtFormat, {
+                    zone: 'utc',
+                  }),
+                })),
+              },
+            ],
+          },
+          options: { scales: { x: { type: 'time' } } },
+        });
+
+        new Chart(millisChartCtx, {
+          type: 'line',
+          data: {
+            datasets: [
+              {
+                label: 'Millis',
+                data: batteries.map((b) => ({
+                  y: b.millis,
+                  x: DateTime.fromFormat(b.created_at, createdAtFormat, {
+                    zone: 'utc',
+                  }),
+                })),
+              },
+            ],
+          },
+          options: { scales: { x: { type: 'time' } } },
+        });
       }
+
       document.addEventListener(
         'DOMContentLoaded',
         () => onload().catch(console.error),
