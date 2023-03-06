@@ -68,6 +68,8 @@
                   display: true,
                   text: 'Hour',
                 },
+                min: DateTime.now().minus({ days: 10 }).valueOf(),
+                max: DateTime.now().valueOf(),
               },
             },
           },
