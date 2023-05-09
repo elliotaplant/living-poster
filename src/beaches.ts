@@ -5,8 +5,8 @@
  * Open the Network tab in the developer console
  * Filter by Fetch/XHR
  * Filter for requests with the prefix
- *  "https://services.surfline.com/kbyg/regions/forecasts/conditions"
- * Get the "subregionId" query param
+ *  "https://services.surfline.com/kbyg/spots/forecasts/wave"
+ * Get the "spotId" query param
  *
  * NOAA ID:
  * Go to https://tidesandcurrents.noaa.gov/map
@@ -31,7 +31,7 @@ export const beaches = {
     noaaId: '9410170',
   },
   montara: {
-    surflineId: '5cc73566c30e4c0001096989',
+    surflineId: '5842041f4e65fad6a77089c1',
     noaaId: '9413450', // Actually Monterey
   },
 };

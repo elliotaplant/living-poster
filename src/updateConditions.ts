@@ -26,6 +26,10 @@ async function getSurflineCondition(
     something = JSON.stringify(await surflineResponse.json());
   }
 
+  if (surflineId === '5cc73566c30e4c0001096989') {
+    console.log('something', something);
+  }
+
   // const forecastList: any = await surflineResponse.json();
   const forecastList: any = JSON.parse(something);
 
@@ -61,6 +65,7 @@ async function getSurfConditions() {
     beachConditions[beachName] = { surfHeight: 0, windSpeed: 0, waterTemp: 0 };
 
     // Get wave height and wind speed from surfline
+    console.log(beachName, surflineId);
     const { surf } = await getSurflineCondition('wave', surflineId);
     beachConditions[beachName].surfHeight = (surf.max + surf.min) / 2;
 
