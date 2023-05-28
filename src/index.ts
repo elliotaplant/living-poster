@@ -10,8 +10,8 @@ export default {
     if (url.pathname.includes('favicon')) {
       return new Response('Why are you looking for a favicon?');
     } else if (url.pathname.includes('update')) {
-      await updateConditions(env.LIVING_POSTER);
-      return new Response('Conditions updated');
+      const conditions = await updateConditions(env.LIVING_POSTER);
+      return new Response(`Conditions updated: ${JSON.stringify(conditions)}`);
     } else if (url.pathname.includes('telemetry')) {
       const posterId = url.searchParams.get('poster_id');
       const { results } = await env.DB.prepare(

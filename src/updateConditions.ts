@@ -21,17 +21,12 @@ async function getSurflineCondition(
   );
   const { headers } = surflineResponse;
   const contentType = headers.get('content-type') || '';
-  let something = '{}';
+  let jsonForecastList = '{}';
   if (contentType.includes('application/json')) {
-    something = JSON.stringify(await surflineResponse.json());
+    jsonForecastList = JSON.stringify(await surflineResponse.json());
   }
 
-  if (surflineId === '5cc73566c30e4c0001096989') {
-    console.log('something', something);
-  }
-
-  // const forecastList: any = await surflineResponse.json();
-  const forecastList: any = JSON.parse(something);
+  const forecastList: any = JSON.parse(jsonForecastList);
 
   for (const forecast of forecastList.data[condition]) {
     if (forecast.timestamp - Date.now() / 1000 > 0) {
@@ -55,6 +50,10 @@ async function getNoaaWaterTemp(noaaId: string) {
   });
 
   const parsedNoaaResponse: any = await withUpdatedHeaders.json();
+  console.log(
+    'parsedNoaaResponse',
+    JSON.stringify(parsedNoaaResponse, null, 2)
+  );
   return Number(parsedNoaaResponse.data[0].v);
 }
 
@@ -81,5 +80,7 @@ async function getSurfConditions() {
 
 export async function updateConditions(kv: KVNamespace) {
   const surfConditions = await getSurfConditions();
+  console.log('Conditions:', JSON.stringify(surfConditions));
   await kv.put(SURF_CONDITIONS_KV_KEY, JSON.stringify(surfConditions, null, 2));
+  return surfConditions;
 }

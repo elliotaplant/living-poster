@@ -24,7 +24,7 @@ export const beaches = {
   },
   stinson: {
     surflineId: '5842041f4e65fad6a77089c1',
-    noaaId: '9415020', // Actually Point Reyes
+    noaaId: '9414290', // Actually San Francisco
   },
   sunsetCliffs: {
     surflineId: '5842041f4e65fad6a7708840',
