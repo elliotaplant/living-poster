@@ -32,7 +32,15 @@
     <script>
       const createdAtFormat = 'yyyy-MM-dd hh:mm:ss';
       const { DateTime, Interval } = luxon;
+      let heartbeatsChart;
+      let batteriesChart;
+      let millisChart;
       async function updateCharts() {
+        // Destroy existing charts
+        if (heartbeatsChart) heartbeatsChart.destroy();
+        if (batteriesChart) batteriesChart.destroy();
+        if (millisChart) millisChart.destroy();
+
         const posterId = document.getElementById('posterIdSelect').value;
 
         const heartbeats = await (
@@ -50,7 +58,7 @@
         const batteriesChartCtx = document.getElementById('batteriesChart');
         const millisChartCtx = document.getElementById('millisChart');
 
-        new Chart(heartbeatsChartCtx, {
+        heartbeatsChart = new Chart(heartbeatsChartCtx, {
           type: 'bar',
           data: {
             datasets: [
@@ -78,7 +86,7 @@
           },
         });
 
-        new Chart(batteriesChartCtx, {
+        batteriesChart = new Chart(batteriesChartCtx, {
           type: 'line',
           data: {
             datasets: [
@@ -96,7 +104,7 @@
           options: { scales: { x: { type: 'time' } } },
         });
 
-        new Chart(millisChartCtx, {
+        millisChart = new Chart(millisChartCtx, {
           type: 'line',
           data: {
             datasets: [

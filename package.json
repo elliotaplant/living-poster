@@ -11,6 +11,7 @@
   "private": true,
   "scripts": {
     "start": "wrangler dev",
-    "publish": "wrangler publish"
+    "publish": "wrangler publish",
+    "publish-pages": "wrangler pages publish public"
   }
 }
