@@ -14,6 +14,7 @@
         gap: 1em;
       "
     >
+      <select id="posterIdSelect"></select>
       <canvas id="heartbeatsChart"></canvas>
       <canvas id="batteriesChart"></canvas>
       <canvas id="millisChart"></canvas>
@@ -31,15 +32,17 @@
     <script>
       const createdAtFormat = 'yyyy-MM-dd hh:mm:ss';
       const { DateTime, Interval } = luxon;
-      async function onload() {
+      async function updateCharts() {
+        const posterId = document.getElementById('posterIdSelect').value;
+
         const heartbeats = await (
           await fetch(
-            'https://living-poster.elliotaplant9602.workers.dev/telemetry?poster_id=1'
+            `https://living-poster.elliotaplant9602.workers.dev/telemetry?poster_id=${posterId}`
           )
         ).json();
         const batteries = await (
           await fetch(
-            'https://living-poster.elliotaplant9602.workers.dev/battery?poster_id=1'
+            `https://living-poster.elliotaplant9602.workers.dev/battery?poster_id=${posterId}`
           )
         ).json();
 
@@ -112,11 +115,24 @@
         });
       }
 
-      document.addEventListener(
-        'DOMContentLoaded',
-        () => onload().catch(console.error),
-        false
-      );
+      document.addEventListener('DOMContentLoaded', () => {
+        const selectElement = document.getElementById('posterIdSelect');
+
+        // Generate options for 100 poster ids
+        for (let i = 1; i <= 100; i++) {
+          let option = document.createElement('option');
+          option.value = i;
+          option.text = `Poster ${i}`;
+          selectElement.appendChild(option);
+        }
+
+        // Load the charts after populating the select options
+        updateCharts().catch(console.error);
+
+        selectElement.addEventListener('change', () =>
+          updateCharts().catch(console.error)
+        );
+      });
     </script>
   </body>
 </html>
