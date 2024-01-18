@@ -35,7 +35,7 @@ export const beaches: {
   },
   stinson: {
     surflineId: '5842041f4e65fad6a77089c1',
-    noaaId: '9414290', // Actually San Francisco
+    noaaId: '9414750', // Alameda, CA
     conditions: ['wave', 'wind', 'water-temp'],
   },
   sunsetCliffs: {
@@ -55,7 +55,7 @@ export const beaches: {
   },
   oceanBeach: {
     surflineId: '5842041f4e65fad6a770883f',
-    noaaId: '9414290', // Presidio, SF
-    conditions: ['tide', 'wind', 'water-temp'],
+    noaaId: '9414750', // Alameda, CA
+    conditions: ['wave', 'wind', 'water-temp'],
   },
 };
