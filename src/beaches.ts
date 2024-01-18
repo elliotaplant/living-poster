@@ -53,4 +53,9 @@ export const beaches: {
     noaaId: '8577330', // Solomon's Island
     conditions: ['tide', 'wind', 'water-temp'],
   },
+  oceanBeach: {
+    surflineId: '5842041f4e65fad6a770883f',
+    noaaId: '9414290', // Presidio, SF
+    conditions: ['tide', 'wind', 'water-temp'],
+  },
 };

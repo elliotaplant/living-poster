@@ -1,0 +1,22 @@
+{
+  "tourmaline": {
+    "surfHeight": 1.5,
+    "windSpeed": 4.14871,
+    "waterTemp": 56.5
+  },
+  "blacks": {
+    "surfHeight": 3.5,
+    "windSpeed": 3.96324,
+    "waterTemp": 56.5
+  },
+  "stinson": {
+    "surfHeight": 3.5,
+    "windSpeed": 28.016930000000002,
+    "waterTemp": 49.3
+  },
+  "sunsetCliffs": {
+    "surfHeight": 2.5,
+    "windSpeed": 2.95404,
+    "waterTemp": 56.5
+  }
+}
