@@ -44,7 +44,7 @@ export const beaches: {
     conditions: ['wave', 'wind', 'water-temp'],
   },
   montara: {
-    surflineId: '5842041f4e65fad6a77089c1',
+    surflineId: '5842041f4e65fad6a7708974',
     noaaId: '9413450', // Actually Monterey
     conditions: ['wave', 'wind', 'water-temp'],
   },
